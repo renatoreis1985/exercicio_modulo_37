@@ -1,40 +1,23 @@
-// Recursos externos
-import { Link } from 'react-router-dom'
-import { HashLink } from 'react-router-hash-link'
-
-// Imagens (não é exatamente um recurso externo, mas também não se encaixa bem em componentes ou estilos)
-import faceSrc from '../../assets/icons/facebook.png'
-import instaSrc from '../../assets/icons/instagram.png'
-import LogoImgHome from '../../assets/icons/logo.png'
-import twSrc from '../../assets/icons/twitter.png'
-
-// Estilos
-import * as S from './styles'
+import logo from '../../assets/logo.png'
+import facebook from '../../assets/facebook-round-svgrepo-com 1.png'
+import instagram from '../../assets/instagram-round-svgrepo-com (1) 1.png'
+import twitter from '../../assets/twitter-2-svgrepo-com 1.png'
+import { FooterStyle, Branding, SocialMedia, Disclaimer } from './styles'
 
 const Footer = () => (
-  <S.Footers className="container">
-    <S.SectionFooter>
-      <Link title="Clique aqui para retornar a pagina home" to="/">
-        <img className="imagemLogo" src={LogoImgHome} alt="efood" />
-      </Link>
-      <S.RedeSociais>
-        <HashLink to="https://www.instagram.com">
-          <img src={instaSrc} alt="Instagram" />
-        </HashLink>
-        <HashLink to="https://www.facebook.com">
-          <img src={faceSrc} alt="Facebook" />
-        </HashLink>
-        <HashLink to="https://www.twitter.com">
-          <img src={twSrc} alt="Twitter" />
-        </HashLink>
-      </S.RedeSociais>
-    </S.SectionFooter>
-    <S.Titulo>
+  <FooterStyle>
+    <Branding src={logo} alt="Logo do efood" />
+    <SocialMedia>
+      <img src={facebook} alt="" />
+      <img src={instagram} alt="" />
+      <img src={twitter} alt="" />
+    </SocialMedia>
+    <Disclaimer>
       A efood é uma plataforma para divulgação de estabelecimentos, a
       responsabilidade pela entrega, qualidade dos produtos é toda do
       estabelecimento contratado.
-    </S.Titulo>
-  </S.Footers>
+    </Disclaimer>
+  </FooterStyle>
 )
 
 export default Footer

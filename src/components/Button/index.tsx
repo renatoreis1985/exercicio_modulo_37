@@ -1,41 +1,18 @@
-import { ButtonContainer, ButtonLink } from './styles'
+import { BotaoContainer } from './styles'
 
 export type Props = {
-  type: 'button' | 'link' | 'submit'
-  title: string
+  type?: 'link' | 'tag'
+  title?: string
   to?: string
+  children: string
   onClick?: () => void
-  children: React.ReactNode
-  background: 'light' | 'dark' // Use background em vez de $background
-  disabled?: boolean
 }
 
-const Botao = ({
-  type,
-  children,
-  title,
-  disabled,
-  to,
-  onClick,
-  background
-}: Props) => {
-  if (type === 'button' || type === 'submit') {
-    return (
-      <ButtonContainer
-        background={background}
-        type={type}
-        title={title}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        {children}
-      </ButtonContainer>
-    )
-  }
+const Botao = ({ to, children, type = 'tag' }: Props) => {
   return (
-    <ButtonLink to={to as string} title={title} background={background}>
+    <BotaoContainer type={type} to={to as string}>
       {children}
-    </ButtonLink>
+    </BotaoContainer>
   )
 }
 

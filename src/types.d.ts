@@ -1,44 +1,11 @@
-type product = {
+declare type Pedido = {
   id: number
-  price: number
-}
-
-type PurchasePayload = {
-  products: product[]
-  delivery: {
-    receiver: string
-    address: {
-      description: string
-      city: string
-      zipCode: string
-      number: number
-      complement?: string
-    }
-  }
-  payment: {
-    card: {
-      name?: string
-      number?: string
-      code?: number
-      expires?: {
-        month: number
-        year: number
-      }
-    }
-  }
-}
-
-declare interface CardapioItem {
-  id: string
-  foto: string
-  descricao: string
-  preco: number
   nome: string
-  porcao: string
+  foto: string
+  preco: number
 }
 
-declare interface Efood {
-  find(arg0: (item: { id: string | undefined }) => boolean): Efood
+declare type Restaurant = {
   id: number
   titulo: string
   destacado: boolean
@@ -46,5 +13,14 @@ declare interface Efood {
   avaliacao: number
   descricao: string
   capa: string
-  cardapio: CardapioItem[]
+  cardapio: [
+    {
+      foto: string
+      preco: number
+      id: number
+      nome: string
+      descricao: string
+      porcao: string
+    }
+  ]
 }

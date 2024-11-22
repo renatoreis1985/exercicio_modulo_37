@@ -1,22 +1,50 @@
-// Recursos externos
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-type PurchaseResponse = {
+type Resposta = {
   orderId: string
 }
+type PurchasePayload = {
+  products: [
+    {
+      id: number
+      price: number
+    }
+  ]
+  delivery: {
+    receiver: string
+    address: {
+      description: string
+      city: string
+      zipCode: string
+      number: number
+      complement?: string
+    }
+  }
+  payment: {
+    card: {
+      name: string
+      number: string
+      code: number
+      expires: {
+        month: number
+        year: number
+      }
+    }
+  }
+}
 
-export const api = createApi({
+const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://fake-api-tau.vercel.app/api/efood'
+    baseUrl: 'https://fake-api-tau.vercel.app/api/efood/'
   }),
   endpoints: (builder) => ({
-    getHomePage: builder.query<Efood[], void>({
-      query: () => 'restaurantes'
-    }),
-    getFeatureEfood: builder.query<Efood, string>({
+    getRestaurantSelected: builder.query<Restaurant, string>({
       query: (id) => `restaurantes/${id}`
     }),
-    purchase: builder.mutation<PurchaseResponse, PurchasePayload>({
+    getRestaurants: builder.query<Restaurant[], void>({
+      query: () => 'restaurantes'
+    }),
+    purchase: builder.mutation<Resposta, PurchasePayload>({
       query: (body) => ({
         url: 'checkout',
         method: 'POST',
@@ -26,9 +54,9 @@ export const api = createApi({
   })
 })
 
+export default api
 export const {
-  useGetFeatureEfoodQuery,
-  useGetHomePageQuery,
+  useGetRestaurantsQuery,
+  useGetRestaurantSelectedQuery,
   usePurchaseMutation
 } = api
-export default api

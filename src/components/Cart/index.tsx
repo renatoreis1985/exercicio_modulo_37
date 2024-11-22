@@ -1,72 +1,73 @@
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Checkout from '../../pages/Checkout'
+import {
+  Overlay,
+  CartContainer,
+  AddCartButton,
+  Sidebar,
+  ItemCart,
+  ImageItem,
+  InfosItem,
+  DeleteItemButton,
+  InfosCart,
+  CartStage
+} from './style'
 import { RootReducer } from '../../store'
-import { close, remove } from '../../store/reducers/cart'
-import { getTotalPrice, parseToBrl } from '../../utils'
-import Botao from '../Button'
-import * as S from './styles'
+import { close, removeItem, startCheckout } from '../../store/reducers/cart'
+import { priceFormat } from '../FoodList'
+import Checkout from '../Checkout'
 
 const Cart = () => {
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+  const { isOpen, pedido, isAddress, isCart } = useSelector(
+    (state: RootReducer) => state.cart
+  )
   const dispatch = useDispatch()
-  const [showCheckout, setShowCheckout] = useState(false)
-
-  const closeCart = () => {
+  const openCart = () => {
     dispatch(close())
   }
-
-  const removeItem = (id: number) => {
-    dispatch(remove(id))
+  const activeCheckout = () => {
+    if (getTotalPrice() > 0) {
+      dispatch(startCheckout())
+    } else {
+      alert('Não há itens no carrinho')
+    }
   }
 
-  const goToCheckout = () => {
-    setShowCheckout(true)
-    closeCart()
+  const getTotalPrice = () => {
+    return pedido.reduce((acumulator, actualValue) => {
+      return (acumulator += actualValue.preco)
+    }, 0)
   }
-
+  const remItem = (id: number) => {
+    dispatch(removeItem(id))
+  }
   return (
-    <>
-      <S.CartContainer className={isOpen ? 'isOpen' : ''}>
-        {!showCheckout && <S.Overlay onClick={closeCart} />}
-        <S.Sidebar>
-          {items.length > 0 ? (
-            <>
-              <ul>
-                {items.map((item) => (
-                  <S.CartItem key={item.id}>
-                    <img src={item.foto} alt={item.nome} />
-                    <div>
-                      <h3>{item.nome}</h3>
-                      <span>{parseToBrl(item.preco)}</span>
-                    </div>
-                    <button onClick={() => removeItem(item.id)} type="button" />
-                  </S.CartItem>
-                ))}
-              </ul>
-              <S.Prices>
-                Valor Total <span>{parseToBrl(getTotalPrice(items))}</span>
-              </S.Prices>
-              <Botao
-                onClick={goToCheckout}
-                type="button"
-                title="Clique aqui para continuar com a compra"
-                background="dark"
-              >
-                Continuar com a entrega
-              </Botao>
-            </>
-          ) : (
-            <p className="empty-text">
-              O carrinho está vazio, adicione pelo menos um produto para
-              continuar com a compra
-            </p>
-          )}
-        </S.Sidebar>
-      </S.CartContainer>
-
-      {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
-    </>
+    <CartContainer className={isOpen ? 'is-open' : ''}>
+      <Overlay onClick={openCart} />
+      <Sidebar>
+        <CartStage className={!isCart ? 'is-checkout' : ''}>
+          <ul>
+            {pedido.map((p) => (
+              <ItemCart key={p.id}>
+                <ImageItem src={p.foto} alt="" />
+                <InfosItem>
+                  <h3>{p.nome}</h3>
+                  <span>{priceFormat(p.preco)}</span>
+                </InfosItem>
+                <DeleteItemButton type="button" onClick={() => remItem(p.id)} />
+              </ItemCart>
+            ))}
+          </ul>
+          <InfosCart>
+            <p>Valor total</p>
+            <span>{priceFormat(getTotalPrice())}</span>
+          </InfosCart>
+          <AddCartButton onClick={activeCheckout}>
+            Continuar com a entrega
+          </AddCartButton>
+        </CartStage>
+        <Checkout checkoutStart={isAddress} priceTotal={getTotalPrice()} />
+      </Sidebar>
+    </CartContainer>
   )
 }
 

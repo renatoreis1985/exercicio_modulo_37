@@ -1,126 +1,66 @@
 import styled from 'styled-components'
-import { Props } from '.'
-import { breakpoints, colors } from '../../styles'
+import fundo from '../../assets/fundoHero.png'
+import { breakpoints, cores } from '../../styles'
 
-export const HeaderPage = styled.div`
-  width: 100%;
-`
+export const HeaderStyle = styled.header`
+  background-image: url(${fundo});
 
-export const Imagem = styled.div<Props>`
-  max-width: 2031.81px;
-  width: 100%;
-  max-height: ${(props) => (props.background === 'dark' ? '186px' : '360px')};
-  height: 100%;
-  display: block;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 171px;
-  }
-
-  .imagemLogoLnk {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 125px;
-    height: 57.5px;
-
-    /* Estilo para tablet */
-    @media (max-width: ${breakpoints.tablet}) {
-      margin-top: 40px;
-      margin-bottom: 0;
-    }
-
-    /* Estilo para mobile */
-    @media (max-width: ${breakpoints.mobile}) {
-      margin-top: 40px;
-      margin-bottom: 0;
-    }
-  }
-`
-export const Titulo = styled.h2`
-  width: 539px;
-  height: 84px;
-
-  font-size: 36px;
-  font-weight: 900;
-  line-height: 42.19px;
-  text-align: center;
-  margin-top: 138.5px;
-
-  /* Estilo para tablet */
-  @media (max-width: ${breakpoints.tablet}) {
-    width: 100%;
-    height: 100%;
-    font-size: 28px;
-    font-weight: 900;
-    line-height: 42.19px;
-    margin-top: 138.5px;
-    font-size: 28px;
-  }
-
-  /* Estilo para mobile */
-  @media (max-width: ${breakpoints.mobile}) {
-    /* max-width: 100%; */
-    width: 100%;
-    height: 100%;
-    font-size: 36px;
-    font-weight: 900;
-    line-height: 42.19px;
-    margin-top: 138.5px;
-    font-size: 28px;
-  }
-`
-export const ContainerHeader = styled.div`
-  display: flex;
-  width: 100%;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  .container {
+    padding: 39px 0;
+    max-width: 1024px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
 
-  /* Estilo para mobile */
-  @media (max-width: ${breakpoints.mobile}) {
-    align-items: center;
+    @media (max-width: ${breakpoints.iphone11}) {
+      display: inline-block;
+    }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      display: inline-block;
+    }
+    @media (max-width: ${breakpoints.desktop}) {
+      padding: 39px 10px;
+    }
   }
 `
-export const RestaurantName = styled(ContainerHeader)`
+export const Branding = styled.img`
+  max-width: 125px;
+  width: 100%;
+  height: 57.5px;
+  @media (max-width: ${breakpoints.iphone11}) {
+    margin: 15px;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    margin: 15px;
+  }
+`
+export const LinkRestaurantes = styled.a`
   font-size: 18px;
-  font-weight: 900;
-  justify-content: left;
-  padding-top: none;
-
-  /* Estilo para tablet */
-  @media (max-width: ${breakpoints.tablet}) {
-    margin-top: 40px;
+  font-weight: bold;
+  text-decoration: none;
+  color: ${cores.vermelho};
+  margin-top: 39px;
+  @media (max-width: ${breakpoints.iphone11}) {
+    margin-top: 0;
   }
-  /* Estilo para mobile */
   @media (max-width: ${breakpoints.mobile}) {
-    margin-top: 40px;
+    margin-top: 0;
   }
 `
-export const CarrinhoDeProdutos = styled(ContainerHeader)`
+
+export const TextCart = styled.p`
   font-size: 18px;
-  font-weight: 900;
-  justify-content: right;
-  padding-top: none;
-
-  /* Estilo para tablet */
-  @media (max-width: ${breakpoints.tablet}) {
-    margin-top: 40px;
-    text-align: center;
-  }
-  /* Estilo para mobile */
-  @media (max-width: ${breakpoints.mobile}) {
-    margin-top: 40px;
-    padding-left: 5%;
-    text-align: center;
-  }
-`
-export const CartButton = styled.span`
-  color: ${colors.LightSalmon};
+  font-weight: bold;
+  margin-top: 39px;
   cursor: pointer;
+  @media (max-width: ${breakpoints.iphone11}) {
+    margin-top: 0;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 0;
+  }
 `
